@@ -11,7 +11,7 @@ module ApplicationHelper
     ret += "</td><td>"
     ret += text_field i, :hours, placeholder: '0', id: "hours-#{i}", value: hours
     ret += "</td><td style='vertical-align: middle'>"
-    ret += (link_to "Delete<i class='glyphicon glyphicon-trash'></i>".html_safe, "/deleteline/#{i}",
+    ret += (link_to "Delete<i class='fa fa-trash-o'></i>".html_safe, "/deleteline/#{i}",
                                       remote:true, method: 'delete', class: 'btn btn-danger').html_safe
     ret += "</td></tr>"
     escape_javascript ret.html_safe

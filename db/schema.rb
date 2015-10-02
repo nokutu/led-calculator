@@ -11,50 +11,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625130801) do
+ActiveRecord::Schema.define(version: 20150628125839) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admins", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
   create_table "calculation_lines", force: :cascade do |t|
-    t.integer "calculation_id", limit: 4
-    t.integer "product_id",     limit: 4
-    t.integer "hours",          limit: 4
-    t.integer "amount",         limit: 4
+    t.integer "calculation_id"
+    t.integer "product_id"
+    t.integer "hours"
+    t.integer "amount"
   end
 
   add_index "calculation_lines", ["calculation_id"], name: "index_calculation_lines_on_calculation_id", using: :btree
   add_index "calculation_lines", ["product_id"], name: "index_calculation_lines_on_product_id", using: :btree
 
   create_table "calculations", force: :cascade do |t|
-    t.string  "name",         limit: 255
-    t.integer "post_code",    limit: 4
-    t.string  "phone_number", limit: 255
-    t.string  "email",        limit: 255
+    t.string  "name"
+    t.integer "post_code"
+    t.string  "phone_number"
+    t.string  "email"
+    t.boolean "finished",     default: false
   end
 
   create_table "products", force: :cascade do |t|
-    t.string  "name",               limit: 255
-    t.string  "name_led",           limit: 255
-    t.string  "name_incandescent",  limit: 255
-    t.decimal "price_led",                      precision: 10, scale: 2
-    t.integer "power_incandescent", limit: 4
-    t.integer "power_led",          limit: 4
+    t.string  "name"
+    t.string  "name_led"
+    t.string  "name_incandescent"
+    t.decimal "price_led",          precision: 10, scale: 2
+    t.integer "power_incandescent"
+    t.integer "power_led"
   end
 
 end

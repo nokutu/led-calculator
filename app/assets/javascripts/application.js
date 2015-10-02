@@ -15,4 +15,5 @@
 //= require jquery-ui
 //= require twitter/bootstrap
 //= require turbolinks
+//= require zeroclipboard
 //= require_tree .

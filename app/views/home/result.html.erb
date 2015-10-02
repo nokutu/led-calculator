@@ -22,7 +22,7 @@
             <td><%=calculation_line.hours%></td>
             <td><%=((calculation_line.product.power_incandescent - calculation_line.product.power_led) * calculation_line.amount).round(2)%>w</td>
             <td>
-              <%=(((((calculation_line.product.power_incandescent - calculation_line.product.power_led) * calculation_line.amount) / 1000.0) * Calculation::ELECTRICITY_PRICE) * 30).round(2)%>€
+              <%=((((calculation_line.product.power_incandescent - calculation_line.product.power_led) * calculation_line.amount) / 1000.0) * Calculation::ELECTRICITY_PRICE * 30 * calculation_line.hours).round(2)%>€
             </td>
           </tr>
         <%end%>
@@ -40,9 +40,24 @@
       You will need <%=@calculation.amortization_string%> in order to amortize the investment.
       Take into account that the average led life is between 15 and 25 years.
     </p>
-    <p>You can recover this calculation with this code: <strong><%=encode(@calculation.id)%></strong></p>
+    <p> <%= link_to "Download as a pdf", '/result.pdf' %> </p>
+    <p>You can recover this calculation with this code: </p>
+    <div class="input-group input-group-sm col-md-2">
+      <input class="form-control input-sm" id="codecopy" style="cursor:default" type="text" readonly value="<%=encode(@calculation.id)%>">
+      <div class="input-group-btn">
+        <button class='my_clip_button btn btn-default' data-clipboard-target='codecopy' data-clipboard-text='Default clipboard text from attribute' id='d_clip_button' title='Click me to copy to clipboard.'>
+          <i class="fa fa-clipboard"></i>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class='panel-footer'>
+  <div class='panel-footer clearfix'>
     <a class='btn btn-primary' href="/again">Do it again</a>
+    <%= mail_to "jorgefernandez@integraenergia.es", 'Contact us' ,class: "btn btn-primary pull-right" %>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    var clip = new ZeroClipboard($("#d_clip_button"))
+  });
+</script>
